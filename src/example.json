@@ -1,0 +1,53 @@
+{
+  "users": [
+    {
+      "ID": "1",
+      "name": "cor"
+    },
+    {
+      "ID": 2,
+      "username": "roc"
+    }
+  ],
+  "characters": [
+    {
+      "ID": 1,
+      "userID": 1,
+      "avatar": "http://i.imgur.com/8IMdzu3.jpg",
+      "gallery": [
+        "http://i.imgur.com/neIEW0P.png",
+        "http://i.imgur.com/8IMdzu3.jpg"
+      ],
+      "name": "test",
+      "color": "#fff"
+    }
+  ],
+  "room": [
+    {
+      "ID": 1,
+      "owners": [1]
+    }
+  ],
+  "messages": [
+    {
+      "ID": 1,
+      "userID": 1,
+      "characterID": 1,
+      "roomID": 1,
+      "characterName": "1test",
+      "characterColor": "#cdc",
+      "characterAvatar": "http://i.imgur.com/8IMdzu3.jpg",
+      "content": "1harleybins"
+    },
+    {
+      "ID": 2,
+      "userID": 1,
+      "characterID": 1,
+      "roomID": 1,
+      "characterName": "2test",
+      "characterColor": "#dcd",
+      "characterAvatar": "http://i.imgur.com/8IMdzu3.jpg",
+      "content": "2harleybins"
+    }
+  ]
+}
