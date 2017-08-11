@@ -22,10 +22,12 @@
       "color": "#fff"
     }
   ],
-  "room": [
+  "rooms": [
     {
       "ID": 1,
-      "owners": [1]
+      "owners": [1],
+      "name": "Test Room",
+      "description": "This is a room with a description"
     }
   ],
   "messages": [
