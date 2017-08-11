@@ -21,12 +21,12 @@ class App extends Component {
     return (
       <div>
         {this.state.timestamp}
-        <div class='room-information'>
+        <div className='room-information'>
           <h1>{currentRoom.name}</h1>
           <div>{currentRoom.description}</div>
         </div>
 
-        <div class='messages'>
+        <div className='messages'>
           {messageList}
         </div>
 
@@ -37,7 +37,7 @@ class App extends Component {
 
 function Message(props) {
   return (
-    <div class='message' style={{color: props.value.characterColor}}>
+    <div className='message' style={{color: props.value.characterColor}}>
 
       <div>
         <img alt={props.value.characterName + '-avatar'} src={props.value.characterAvatar} height='100' />
