@@ -6,6 +6,7 @@ import { subscribeToTimer } from './api';
 class App extends Component {
   constructor(props) {
     super(props);
+    this.state = {timestamp: 'Connected'};
     subscribeToTimer((err, timestamp) => this.setState({ 
       timestamp 
     }));
@@ -20,7 +21,7 @@ class App extends Component {
 
     return (
       <div>
-        {this.state.timestamp}
+        <h1>{this.state.timestamp}</h1>
         <div className='room-information'>
           <h1>{currentRoom.name}</h1>
           <div>{currentRoom.description}</div>

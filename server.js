@@ -24,4 +24,7 @@ MongoClient.connect(url, function(err, db) {
   console.log("Connected correctly to server.");
   db.close();
 });
+<<<<<<< HEAD
 
+=======
+>>>>>>> 1560f1c980c7d77f80fa39ae943717e417f5df5a
