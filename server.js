@@ -1,12 +1,41 @@
+// Connect to Database
+var MongoClient = require('mongodb').MongoClient;
+var assert = require('assert');
+
+var url = 'mongodb://localhost:27017/rpc';
+
+// Connect to Socket
 const io = require('socket.io')();
 
 io.on('connection', (client) => {
-  client.on('subscribeToTimer', (interval) => {
-    console.log('client is subscribing to timer with interval ', interval);
-    setInterval(() => {
-      client.emit('timer', new Date());
-    }, interval);
+
+  client.on('getRoom', () => {
+    MongoClient.connect(url, function(err, db) {
+      assert.equal(null, err);
+      console.log("Connected correctly to database.");
+      
+      // Send Room Information
+      db.collection("rooms").findOne({'name': 'Test Room'}, function(err, room) {
+        assert.equal(null, err);
+
+        data = { 'room': room };
+        client.emit('roomInfo', data);
+
+        // Send message information
+        db.collection("messages").find({roomId: room._id}).toArray(function(err, messages) {
+          assert.equal(null, err);
+
+          data = { 'messages': messages };
+          client.emit('roomInfo', data);
+        });
+      });
+
+
+  
+      db.close();
+    });
   });
+
 });
 
 const port = 8000;
@@ -15,12 +44,3 @@ console.log('listening on port ', port);
 
 // MongoDB Connection
 
-var MongoClient = require('mongodb').MongoClient;
-var assert = require('assert');
-
-var url = 'mongodb://localhost:27017/test';
-MongoClient.connect(url, function(err, db) {
-  assert.equal(null, err);
-  console.log("Connected correctly to server.");
-  db.close();
-});

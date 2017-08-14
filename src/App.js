@@ -1,30 +1,40 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import { subscribeToTimer } from './api';
+import { roomSubscribe } from './api';
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.state = {timestamp: 'Connected'};
-    subscribeToTimer((err, timestamp) => this.setState({ 
-      timestamp 
-    }));
+    this.state = {room: '', messages: []};
+    roomSubscribe((err, data) => this.handleSocketData(err, data));
+  }
+
+  handleSocketData = (err, data) => {
+    console.log(data);
+
+    if (data.room) {
+      this.setState({room: data.room});
+    }
+    
+    if (data.messages) {
+      var tempMessages = this.state.messages;
+      tempMessages = tempMessages.push(data.messages);
+      this.setState({messages: tempMessages});
+    }
   }
 
   render() {
 
     const example = require('./example.json');
-    const currentRoom = example.rooms[0];
 
     const messageList = example.messages.map((message) => <Message key={message.ID} value={message} />);
 
     return (
       <div>
-        <h1>{this.state.timestamp}</h1>
         <div className='room-information'>
-          <h1>{currentRoom.name}</h1>
-          <div>{currentRoom.description}</div>
+          <h1>{this.state.room.name}</h1>
+          <div>{this.state.room.description}</div>
         </div>
 
         <div className='messages'>

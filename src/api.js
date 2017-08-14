@@ -1,9 +1,9 @@
 import openSocket from 'socket.io-client';
-const  socket = openSocket('http://localhost:8000');
+const  socket = openSocket('http://54.187.38.171:8000');
 
-function subscribeToTimer(cb) {
-  socket.on('timer', timestamp => cb(null, timestamp));
-  socket.emit('subscribeToTimer', 100);
+function roomSubscribe(cb) {
+  socket.on('roomInfo', data => cb(null, data));
+  socket.emit('getRoom');
 }
 
-export { subscribeToTimer };
+export { roomSubscribe };
