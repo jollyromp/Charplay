@@ -11,24 +11,22 @@ class App extends Component {
   }
 
   handleSocketData = (err, data) => {
-    console.log(data);
-
     if (data.room) {
       this.setState({room: data.room});
     }
     
     if (data.messages) {
       var tempMessages = this.state.messages;
-      tempMessages = tempMessages.push(data.messages);
+      tempMessages = tempMessages.concat(data.messages);
       this.setState({messages: tempMessages});
+      console.log(data.messages);
+      console.log(this.state.messages);
     }
   }
 
   render() {
-
-    const example = require('./example.json');
-
-    const messageList = example.messages.map((message) => <Message key={message.ID} value={message} />);
+    
+    const messageList = this.state.messages.map((message) => <Message key={message._id} value={message} />);
 
     return (
       <div>
@@ -51,8 +49,8 @@ function Message(props) {
     <div className='message' style={{color: props.value.characterColor}}>
 
       <div>
-        <img alt={props.value.characterName + '-avatar'} src={props.value.characterAvatar} height='100' />
-        <h2>{props.value.characterName}</h2>
+        <img alt={props.value._character.name + '-avatar'} src={props.value._character.avatar} height='100' />
+        <h2>{props.value._character.name}</h2>
       </div>
 
       <div>
