@@ -12,10 +12,11 @@ const io = require('socket.io')();
 
 io.on('connection', (client) => {
 
-  client.on('getRoom', () => {
+  client.on('getRoom', (data) => {
 
-    Room.findOne({'name': 'Test Room'}).populate('_owners').exec(function (err, room) {
+    Room.findOne({'_id': data.roomId}).populate('_owners').exec(function (err, room) {
       if (err) throw err;
+      console.log('Sending roomInfo(' + room.name + ') to user');
 
       data = { 'room': room };
 
@@ -24,8 +25,25 @@ io.on('connection', (client) => {
       Message.find({'_room': data.room._id}).populate('_author _character').exec(function (err, messages) {
         if (err) throw err;
 
-        console.log(messages);
+        data = { 'messages': messages };
+        client.emit('roomInfo', data);
+      });
+    });
 
+  });
+
+  client.on('sendMessage', (data) => {
+    console.log(data);
+    var newMessage = Message({
+      _author: data.user,
+      _character: data.character,
+      _room: data.room,
+      content: data.text
+    });
+    Message.create(newMessage, function (err) {
+      if (err) throw err;
+      Message.findOne({'_id': arguments[1]._id}).populate('_author _character').exec(function (err, messages) {
+        if (err) throw err;
         data = { 'messages': messages };
         client.emit('roomInfo', data);
       });

@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 
-import { roomSubscribe } from '../api';
+import { roomSubscribe, sendMessage } from '../api';
 import Room from './Room';
 
 class RoomContainer extends Component {
   constructor(props) {
     super(props);
-    this.state = {room: '', messages: []};
-    roomSubscribe((err, data) => this.handleSocketData(err, data));
+    this.roomId = '5993ff1a9497a32e03c7c3e2';
+    this.userId = '0001';
+    this.characterId = '5993ff1a9497a32e03c7c3e0';
+    this.state = {room: '', messages: [],
+      messageText: ''};
+    roomSubscribe(this.roomId, (err, data) => this.handleSocketData(err, data));
+    this.handleMessageChange = this.handleMessageChange.bind(this);
+    this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   handleSocketData = (err, data) => {
@@ -22,8 +28,34 @@ class RoomContainer extends Component {
     }
   }
 
+  handleMessageChange = (content) => {
+    this.setState({messageText: content});
+  }
+
+  handleKeyPress = (event) => {
+    // Do not submit if Shift+Enter is pressed.
+    if (event.key === 'Enter' && !event.shiftKey) {
+      var message = {
+        user: this.userId,
+        character: this.characterId,
+        room: this.roomId,
+        text: this.state.messageText
+      }
+      this.sendMessageData(message);
+
+      this.setState({messageText: ''});
+      event.preventDefault();
+    }
+  }
+
+  sendMessageData = (data) => {
+    sendMessage(data);
+  }
+
   render() {
-    return (<Room room={this.state.room} messages={this.state.messages} />);
+    return (<Room handleMessageChange={this.handleMessageChange} handleKeyPress={this.handleKeyPress}
+      room={this.state.room} messages={this.state.messages}
+      messageText={this.state.messageText} />);
   }
 }
 

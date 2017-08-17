@@ -5,22 +5,16 @@ import MessageListContainer from '../message/MessageListContainer';
 class Room extends Component {
   constructor(props) {
     super(props);
-    this.state = {sendContent: ''};
     this.handleChange = this.handleChange.bind(this);
     this.handleKeyPress = this.handleKeyPress.bind(this);
   }
 
   handleChange = (event) => {
-    this.setState({sendContent: event.target.value});
+    this.props.handleMessageChange(event.target.value);
   }
 
   handleKeyPress = (event) => {
-    // Do not submit if Shift+Enter is pressed.
-    if (event.key === 'Enter' && !event.shiftKey) {
-      var message = this.state.sendContent;
-      this.setState({sendContent: ''});
-      event.preventDefault();
-    }
+    this.props.handleKeyPress(event);
   }
 
   render() {
@@ -31,7 +25,7 @@ class Room extends Component {
           <div>{this.props.room.description}</div>
         </div>
 
-        <textarea className='send' name='send' value={this.state.sendContent} onKeyPress={this.handleKeyPress} onChange={this.handleChange} />
+        <textarea className='send' name='send' value={this.props.messageText} onKeyPress={this.handleKeyPress} onChange={this.handleChange} />
         
         <MessageListContainer messages={this.props.messages} />
       </div>

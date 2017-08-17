@@ -1,9 +1,13 @@
 import openSocket from 'socket.io-client';
 const  socket = openSocket('http://54.187.38.171:8000');
 
-function roomSubscribe(cb) {
+function roomSubscribe(roomId, cb) {
   socket.on('roomInfo', data => cb(null, data));
-  socket.emit('getRoom');
+  socket.emit('getRoom', {'roomId': roomId});
 }
 
-export { roomSubscribe };
+function sendMessage(content) {
+  socket.emit('sendMessage', content);
+}
+
+export { roomSubscribe, sendMessage };
