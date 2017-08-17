@@ -33,7 +33,6 @@ io.on('connection', (client) => {
   });
 
   client.on('sendMessage', (data) => {
-    console.log(data);
     var newMessage = Message({
       _author: data.user,
       _character: data.character,
@@ -42,9 +41,11 @@ io.on('connection', (client) => {
     });
     Message.create(newMessage, function (err) {
       if (err) throw err;
+      console.log('Sent message');
+      
       Message.findOne({'_id': arguments[1]._id}).populate('_author _character').exec(function (err, messages) {
         if (err) throw err;
-        data = { 'messages': messages };
+        data = {'messages': messages};
         client.emit('roomInfo', data);
       });
     });
