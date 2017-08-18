@@ -18,10 +18,12 @@ function insertUsers(cb) {
     User({
       username: "cor",
       _id: 1,
+      password: "testpassword"
     }),
     User({
       username: "roc",
       _id: 2,
+      password: "testpassword2"
     })
   ];
 
@@ -31,6 +33,10 @@ function insertUsers(cb) {
     
     var data = {};
     data.user = arguments[1][0]._id;
+
+    arguments[1][0].comparePassword('testpassword', (err, data) => {
+      console.log("Comparing passwords...", data);
+    });
 
     console.log("Inserted " + arguments[1].length + " documents into User.");
     
@@ -47,6 +53,7 @@ function insertUsers(cb) {
 function insertCharacters(data, cb) {
   var characters = [
     Character({
+      _id: mongoose.Types.ObjectId("599684a989ccdb4e64aedd38"),
       _author: data.user,
       avatar: "http://i.imgur.com/8IMdzu3.jpg",
       gallery: [
@@ -85,6 +92,7 @@ function insertCharacters(data, cb) {
 
 function insertRooms(data, cb) {
   var room = Room({
+    _id: new mongoose.Types.ObjectId('59969db958f68a563e616dc4'),
     _owners: [data.user],
     name: "Test Room",
     description: "This is a room with a description"

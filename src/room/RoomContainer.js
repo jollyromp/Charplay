@@ -6,9 +6,9 @@ import Room from './Room';
 class RoomContainer extends Component {
   constructor(props) {
     super(props);
-    this.roomId = '5993ff1a9497a32e03c7c3e2';
+    this.roomId = '59969db958f68a563e616dc4';
     this.userId = '0001';
-    this.characterId = '5993ff1a9497a32e03c7c3e0';
+    this.characterId = '599684a989ccdb4e64aedd38';
     this.state = {room: '', messages: [],
       messageText: ''};
     roomSubscribe(this.roomId, (err, data) => this.handleSocketData(err, data));

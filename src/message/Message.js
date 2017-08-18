@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+var Remarkable = require('remarkable');
+var md = new Remarkable();
 
 class Message extends Component {
   render() {
@@ -10,10 +12,7 @@ class Message extends Component {
           <h2>{this.props.value._character.name}</h2>
         </div>
 
-        <div>
-          {this.props.value.content}
-        </div>
-
+        <div dangerouslySetInnerHTML={{__html:md.render(this.props.value.content)}} />
       </li>
     );
   }
