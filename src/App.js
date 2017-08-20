@@ -1,13 +1,19 @@
 import React, { Component } from 'react';
 import './App.css';
 
-import RoomContainer from './room/RoomContainer'
+import { Switch, Route } from 'react-router-dom'
+
+import RoomListContainer from './room/RoomListContainer';
+import RoomContainer from './room/RoomContainer';
 
 class App extends Component {
   render() {
     return (
       <div>
-        <RoomContainer name='test' />
+        <Switch>
+          <Route exact path='/' component={RoomListContainer}/>
+          <Route path='/room/:url' component={RoomContainer}/>
+        </Switch>
       </div>
     );
   }

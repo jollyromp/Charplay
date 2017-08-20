@@ -12,25 +12,30 @@ const io = require('socket.io')();
 
 io.on('connection', (client) => {
 
+  client.on('getRoomList', (data) => {
+    Room.find({}, '_id name description url', function(err, roomList) {
+      client.emit('sendRoomList', roomList);
+    });
+  });
+
   client.on('getRoom', (data) => {
-    client.join('room.'+data.roomId);
-    
-    Room.findOne({'_id': data.roomId}).populate('_owners').exec(function (err, room) {
+    Room.findOne({'url': data}).populate('_owners').exec(function (err, room) {
       if (err) throw err;
-      console.log('Sending roomInfo(' + room.name + ') to user');
 
-      data = { 'room': room };
+      client.join('room.'+room._id);
 
-      client.emit('roomInfo', data);
+      data = {'room': room };
+
+      client.emit('sendRoomInfo', data);
 
       Message.find({'_room': data.room._id}).populate({ path: '_author', select: 'name _id' }).populate('_character').exec(function (err, messages) {
         if (err) throw err;
 
         data = { 'messages': messages };
-        client.emit('roomInfo', data);
+
+        client.emit('sendRoomInfo', data);
       });
     });
-
   });
 
   client.on('sendMessage', (data) => {
@@ -42,13 +47,12 @@ io.on('connection', (client) => {
     });
     Message.create(newMessage, function (err) {
       if (err) throw err;
-      console.log('Sent message to '+data.room);
-      
+
       Message.findOne({'_id': arguments[1]._id}).populate({ path: '_author', select: 'name _id' }).populate('_character').exec(function (err, messages) {
         if (err) throw err;
-        messageData = {'messages': messages};
-        client.to('room.'+data.room).emit('roomInfo', messageData);
-        client.emit('roomInfo', messageData);
+        messageData = {'messages': [messages], 'asdf': 'asdf'};
+        client.to('room.'+data.room).emit('sendRoomInfo', messageData);
+        client.emit('sendRoomInfo', messageData);
       });
     });
   });

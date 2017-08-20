@@ -20,13 +20,13 @@ var bcrypt = require('bcrypt');
 
 // User schema
 var userSchema = new Schema({
-  _id: { type: String, required: true },
+  tag: { type: String, index: { unique: true } },
   username: { type: String, required: true },
   password: { type: String, required: true}
 });
 
 userSchema.pre('save', function(next) {
-  this._id = padId(this._id);
+  this.tag = padTag(this.tag);
 
   var user = this;
   if (!user.isModified('password')) return next();  
@@ -41,11 +41,15 @@ userSchema.pre('save', function(next) {
   });
 });
 
-function padId(n) {
-  z = '0';
-  width = 4;
-  n = n + '';
-  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+function padTag(n) {
+  if (n < 10000) {
+    z = '0';
+    width = 4;
+    n = n + '';
+    return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+  } else {
+    return n;
+  }
 }
 
 userSchema.methods.comparePassword = function(candidatePassword, cb) {
@@ -67,7 +71,7 @@ var characterSchema = new Schema({
 
 // Room schema
 var roomSchema = new Schema({
-  url: {type: String},
+  url: { type: String },
   name: { type: String, required: true },
   description: String,
   _owners: [{ type: String, ref: 'User' }],
@@ -83,7 +87,7 @@ roomSchema.pre('save', function(next) {
 var messageSchema = new Schema({
   _author: { type: String, required: true, ref: 'User' },
   _character: { type: Schema.Types.ObjectId, required: true, ref: 'Character' },
-  _room: { type: Schema.Types.ObjectId, required: true, ref: 'Room' },
+  _room: { type: Schema.Types.ObjectId, required: true, ref: 'Room', index: true },
   content: { type: String, required: true }
 });
 

@@ -14,15 +14,17 @@ var async = require('async');
 // Insert users
 
 function insertUsers(cb) {
+  
   var users = [
     User({
+      _id: mongoose.Types.ObjectId("59988d2f5c222a4bdbae13e8"),
       username: "cor",
-      _id: 1,
+      tag: 1,
       password: "testpassword"
     }),
     User({
       username: "roc",
-      _id: 2,
+      tag: 2,
       password: "testpassword2"
     })
   ];
@@ -94,8 +96,10 @@ function insertRooms(data, cb) {
   var room = Room({
     _id: new mongoose.Types.ObjectId('59969db958f68a563e616dc4'),
     _owners: [data.user],
+    url: 'quiet-sunset-rJZpn8UOW',
     name: "Test Room",
-    description: "This is a room with a description"
+    description: "This is a room with a description",
+    color: "#0074D9"
   });
 
   Room.collection.drop();

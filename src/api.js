@@ -1,13 +1,30 @@
 import openSocket from 'socket.io-client';
-const  socket = openSocket('http://dev.charplay.com:8000');
+const  io = openSocket('ws://dev.charplay.com:8000');
 
-function roomSubscribe(roomId, cb) {
-  socket.on('roomInfo', data => cb(null, data));
-  socket.emit('getRoom', {'roomId': roomId});
+var moment = require('moment');
+
+function roomSubscribe(roomUrl, cb) {
+  if (roomUrl) {
+    io.on('sendRoomInfo', data => cb(null, data));
+    io.emit('getRoom', roomUrl);
+  }
+}
+
+function getRoomList(cb) {
+  io.on('sendRoomList', data=> cb(null, data));
+  io.emit('getRoomList');
 }
 
 function sendMessage(content) {
-  socket.emit('sendMessage', content);
+  io.emit('sendMessage', content);
 }
 
-export { roomSubscribe, sendMessage };
+function getDateFromObjectId(data) {
+  return new Date(parseInt(data.slice(0,8), 16)*1000);
+}
+
+function getRelativeTime(data) {
+  return moment(data).fromNow();
+}
+
+export { roomSubscribe, getRoomList, sendMessage, getDateFromObjectId, getRelativeTime };
