@@ -11,14 +11,12 @@ class RoomListContainer extends Component {
   }
   
   handleRoomList = (err, data) => {
-    if (this.refs.checkMount) {
-      this.setState({'roomList': data});
-    }
+    this.setState({'roomList': data});
   }
 
   render() {
     return (
-      <RoomList ref="checkMount" roomList={this.state.roomList} />
+      <RoomList roomList={this.state.roomList} />
     );
   }
 }

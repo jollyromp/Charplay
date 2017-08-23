@@ -1,7 +1,6 @@
 {
   "name": "Charplay",
   "version": "0.1.0",
-  "private": true,
   "dependencies": {
     "moment": "^2.18.1",
     "react": "^15.6.1",
@@ -11,13 +10,7 @@
     "socket.io-client": "^2.0.3"
   },
   "devDependencies": {
-    "async": "^2.5.0",
-    "bcrypt": "^1.0.2",
-    "mongodb": "^2.2.31",
-    "mongoose": "^4.11.6",
-    "react-scripts": "^1.0.11",
-    "shortid": "^2.2.8",
-    "socket.io": "^2.0.3"
+    "react-scripts": "^1.0.11"
   },
   "scripts": {
     "start": "react-scripts start",

@@ -17,16 +17,14 @@ class RoomContainer extends Component {
   }
 
   handleSocketData = (err, data) => {
-    if (this.refs.checkMount) {
-      if (data.room) {
-        this.setState({room: data.room});
-      }
-      
-      if (data.messages) {
-        var tempMessages = this.state.messages;
-        tempMessages = tempMessages.concat(data.messages);
-        this.setState({messages: tempMessages});
-      }
+    if (data.room) {
+      this.setState({room: data.room});
+    }
+    
+    if (data.messages) {
+      var tempMessages = this.state.messages;
+      tempMessages = tempMessages.concat(data.messages);
+      this.setState({messages: tempMessages});
     }
   }
 
@@ -58,7 +56,7 @@ class RoomContainer extends Component {
   }
 
   render() {
-    return (<Room ref='checkMount' handleMessageChange={this.handleMessageChange} handleKeyPress={this.handleKeyPress}
+    return (<Room handleMessageChange={this.handleMessageChange} handleKeyPress={this.handleKeyPress}
       room={this.state.room} messages={this.state.messages}
       messageText={this.state.messageText} />);
   }
