@@ -2,7 +2,7 @@
   "name": "Charplay",
   "description": "A roleplaying chat client",
   "version": "0.1.0",
-  "licence": "MIT",
+  "license": "MIT",
   "dependencies": {
     "moment": "^2.18.1",
     "react": "^15.6.1",
