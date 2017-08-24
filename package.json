@@ -23,6 +23,6 @@
     "test": "node ./setup && react-scripts test --env=jsdom",
     "start": "node ./setup && react-scripts start",
     "eject": "react-scripts eject",
-    "relay": "curl http://dev.charplay.com:8000/schema -o ./src/graphql.schema && relay-compiler --src ./src --schema ./src/graphql.schema"
+    "relay": "curl http://dev.charplay.com:8000/schema -o ./src/schema.graphql && relay-compiler --src ./src --schema ./src/schema.graphql"
   }
 }
