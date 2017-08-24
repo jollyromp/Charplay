@@ -1,6 +1,8 @@
 {
   "name": "Charplay",
+  "description": "A roleplaying chat client",
   "version": "0.1.0",
+  "licence": "MIT",
   "dependencies": {
     "moment": "^2.18.1",
     "react": "^15.6.1",
@@ -13,9 +15,10 @@
     "react-scripts": "^1.0.11"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "build": "node ./setup && react-scripts build",
+    "test": "node ./setup && react-scripts test --env=jsdom",
+    "start": "node ./setup && react-scripts start",
+    "eject": "react-scripts eject",
+    "relay": "get-graphql-schema http://dev.charplay.com:8000/graphql > ./src/schema.graphql && relay-compiler --src ./src --schema ./src/schema.graphql"
   }
 }
