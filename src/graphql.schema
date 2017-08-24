@@ -1,1 +1,82 @@
-{"errors":[{"message":"Must provide query string."}]}
+schema {
+  query: RootQueryType
+}
+
+# Character item
+type character {
+  # The id of the character.
+  _id: String
+
+  # user that owns the character.
+  _author: user
+
+  # Name of the character.
+  name: String
+
+  # Color Accent of the character.
+  color: String
+
+  # URL of the avatar picture.
+  avatar: String
+
+  # Gallery images for the character.
+  gallery: [String]
+}
+
+# Room item
+type message {
+  # The id of the message.
+  _id: String
+
+  # The id of the message author.
+  _author: user
+
+  # The id of the message character.
+  _character: character
+
+  # The id of the message room
+  _room: room
+
+  # Content of the message.
+  content: String
+}
+
+# Room item
+type room {
+  # The id of the character.
+  _id: String
+
+  # URL identifier for the room.
+  url: String
+
+  # Name of the room
+  name: String
+
+  # Description of the room
+  description: String
+
+  # Owner IDs
+  _owners: [user]
+}
+
+type RootQueryType {
+  user(_id: String!): [user]
+  character(_id: String!): [character]
+  room(_id: String!): [room]
+  message(_room: String!): [message]
+}
+
+# User item
+type user {
+  # The id of the user.
+  _id: String
+
+  # The discriminating tag of the user.
+  tag: String
+
+  # The username of the user.
+  username: String
+
+  # The user's hashed password
+  password: String
+}

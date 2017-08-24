@@ -7,18 +7,22 @@
     "moment": "^2.18.1",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-relay": "^1.2.0",
     "react-router-dom": "^4.1.2",
+    "relay-runtime": "^1.2.0",
     "remarkable": "^1.7.1",
     "socket.io-client": "^2.0.3"
   },
   "devDependencies": {
-    "react-scripts": "^1.0.11"
+    "babel-plugin-relay": "^1.2.0",
+    "react-scripts": "^1.0.11",
+    "relay-compiler": "^1.2.0"
   },
   "scripts": {
     "build": "node ./setup && react-scripts build",
     "test": "node ./setup && react-scripts test --env=jsdom",
     "start": "node ./setup && react-scripts start",
     "eject": "react-scripts eject",
-    "relay": "get-graphql-schema http://dev.charplay.com:8000/graphql > ./src/schema.graphql && relay-compiler --src ./src --schema ./src/schema.graphql"
+    "relay": "curl http://dev.charplay.com:8000/schema -o ./src/graphql.schema && relay-compiler --src ./src --schema ./src/graphql.schema"
   }
 }

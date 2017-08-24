@@ -3,6 +3,9 @@ const  io = openSocket('ws://dev.charplay.com:8000');
 
 var moment = require('moment');
 
+import { graphql } from 'relay-runtime';
+graphql`query {user(_id:"59988d2f5c222a4bdbae13e8"){username,password}}`;
+
 function roomSubscribe(roomUrl, cb) {
   if (roomUrl) {
     io.on('sendRoomInfo', data => cb(null, data));

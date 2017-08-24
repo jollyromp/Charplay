@@ -9,6 +9,9 @@
 # production
 /build
 
+# relay
+/__generate__
+
 # misc
 .DS_Store
 .env.local
