@@ -10,7 +10,7 @@
 /build
 
 # relay
-/__generate__
+*/__generate__
 
 # misc
 .DS_Store
