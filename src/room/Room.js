@@ -27,7 +27,7 @@ class Room extends Component {
 
         <textarea className='send' name='send' value={this.props.messageText} onKeyPress={this.handleKeyPress} onChange={this.handleChange} />
         
-        <MessageListContainer messages={this.props.messages} />
+        <MessageListContainer roomId={this.props.room._id} />
       </div>
     )
   }

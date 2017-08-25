@@ -1,22 +1,40 @@
 import React, { Component } from 'react';
+import environment from '../environment';
 
 import RoomList from './RoomList';
-import { getRoomList } from '../api';
+
+const {
+  QueryRenderer,
+  graphql,
+} = require('react-relay');
 
 class RoomListContainer extends Component {
-  constructor(props) {
-    super(props);
-    getRoomList((err, data) => this.handleRoomList(err, data));
-    this.state = {'roomId': '', 'roomList': []};
-  }
-  
-  handleRoomList = (err, data) => {
-    this.setState({'roomList': data});
-  }
-
   render() {
     return (
-      <RoomList roomList={this.state.roomList} />
+      <div>
+        <QueryRenderer
+          environment={environment}
+          query={graphql`
+            query RoomListContainerQuery {
+              room {
+                _id,
+                url,
+                description,
+                name
+              }
+            }
+          `}
+          render={({error, props}) => {
+            if (error) {
+              return <div>{error.message}</div>;
+            } else if (props) {
+              return <RoomList roomList={props.room} />;
+            }
+            return <div>Loading</div>;
+          }}
+        />
+        
+      </div>
     );
   }
 }

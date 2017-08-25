@@ -62,7 +62,7 @@ type room {
 type RootQueryType {
   user(_id: String!): [user]
   character(_id: String!): [character]
-  room(_id: String!): [room]
+  room(_id: String, url: String): [room]
   message(_room: String!): [message]
 }
 
