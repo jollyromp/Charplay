@@ -10,6 +10,7 @@ const {
 
 class RoomContainer extends Component {
   render() {
+    console.log(environment);
     return (
       <QueryRenderer
       environment={environment}
